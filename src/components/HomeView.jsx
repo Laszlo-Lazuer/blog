@@ -16,6 +16,7 @@ const Home = props => {
             Error!
         </div>
     );
+    console.log(posts)
     return (
         <>
             <div className="container p-2 mx-auto row">
