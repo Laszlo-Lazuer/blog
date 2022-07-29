@@ -1,48 +1,24 @@
-import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
-import HomeView from './components/HomeView';
+import React from 'react';
+import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-class LambdaDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { loading: false, msg: null }
-  }
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import HomeView from './components/HomeView';
+import Navbar from './components/NavBar';
 
-  handleClick = api => e => {
-    e.preventDefault()
+function App() {
+  return (
+    <BrowserRouter>
+    <Navbar />
+      <Routes>
+        <Route path="/*">
+          <Route index element={<HomeView />} />
+          {/* <Route path="pathB" element={<ComponentB />} />
+          <Route path="pathC" element={<ComponentC />} /> */}
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-    this.setState({ loading: true })
-    fetch("/.netlify/functions/" + api)
-      .then(response => response.json())
-      .then(json => this.setState({ loading: false, msg: json.msg }))
-  }
-
-  render() {
-    const { loading, msg } = this.state
-
-    return (
-      <p>
-        <button onClick={this.handleClick("hello")}>{loading ? "Loading..." : "Call Lambda"}</button>
-        <button onClick={this.handleClick("async-dadjoke")}>{loading ? "Loading..." : "Call Async Lambda"}</button>
-        <br />
-        <span>{msg}</span>
-      </p>
-    )
-  }
-}
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <HomeView />
-          <LambdaDemo />
-        
-      </div>
-    )
-  }
-}
-
-export default App
+export default App;
